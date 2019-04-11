@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Hertz
- * Date: 18.11.2018
- * Time: 23:54
- */
 
-namespace test\TWAPI;
+namespace test\APITransferWise;
 
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ResponseInterface;
-use TWAPI\ProfilesAPI;
-use TWAPI\Transport\Transport;
+use APITransferWise\ProfilesAPI;
+use APITransferWise\Transport\Transport;
 
 class ProfilesAPITest extends TestCase
 {
@@ -56,12 +50,12 @@ class ProfilesAPITest extends TestCase
             ->method('get')
             ->with(
                 '/transfers/{?offset,limit,profile,status,createdDateStart,createdDateEnd}',
-                ['offset'=>100]
+                ['offset' => 100]
             )
             ->willReturn(new Response(200, [], '{"sample":"response"}'));
 
         /** @var ProfilesAPI $transport */
-        $res = $instance->list(['offset'=>100]);
+        $res = $instance->list(['offset' => 100]);
         $this->assertEquals([
             'sample' => 'response'
         ], $res);

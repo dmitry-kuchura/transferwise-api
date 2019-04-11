@@ -1,12 +1,11 @@
 <?php
-declare(strict_types=1);
 
-namespace test\TWAPI;
+namespace test\APITransferWise;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\UriTemplate;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
-use TWAPI\Transport\Transport;
+use APITransferWise\Transport\Transport;
 
 class TestCase extends PHPUnitTestCase
 {

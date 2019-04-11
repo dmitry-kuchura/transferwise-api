@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Hertz
- * Date: 18.11.2018
- * Time: 22:51
- */
 
-namespace test\TWAPI\Transport;
+namespace test\APITransferWise\Transport;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use test\TWAPI\TestCase;
+use test\APITransferWise\TestCase;
 use TWAPI\Transport\Transport;
 
 class TransportTest extends TestCase
