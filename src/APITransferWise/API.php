@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace TWAPI;
+namespace APITransferWise;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -13,8 +12,9 @@ use TWAPI\Transport\TransportFactory;
 
 class API
 {
-    protected const BASE_URL_API_PRODUCTION = 'https://api.transferwise.tech/v1/';
-    protected const BASE_URL_API_SANDBOX = 'https://api.sandbox.transferwise.tech/v1/';
+    const BASE_URL_API_PRODUCTION = 'https://api.transferwise.tech/v1/';
+
+    const BASE_URL_API_SANDBOX = 'https://api.sandbox.transferwise.tech/v1/';
 
     protected $profiles;
 
@@ -26,7 +26,7 @@ class API
 
     /**
      * API constructor.
-     * @param $token Access Token
+     * @param $token access token
      * @param array $options Advanced options for transport
      */
     public function __construct($token, array $options = [])
@@ -41,13 +41,13 @@ class API
             : self::BASE_URL_API_PRODUCTION;
     }
 
-    protected function buildTransport($token, $options): Transport
+    protected function buildTransport($token, $options)
     {
         $baseUrl = $this->getBaseUri($options);
 
         $opts = array_merge([], $options);
         $opts['base_url'] = $baseUrl;
-        $opts['token'] = $baseUrl;
+        $opts['token'] = $token;
 
         return TransportFactory::createGuzzleTransport($opts);
     }

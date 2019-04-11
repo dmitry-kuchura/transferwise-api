@@ -1,9 +1,8 @@
 <?php
-declare(strict_types=1);
 
-namespace TWAPI;
+namespace APITransferWise;
 
-use TWAPI\Transport\Transport;
+use APITransferWise\Transport\Transport;
 
 /**
  * Class TWProfiles

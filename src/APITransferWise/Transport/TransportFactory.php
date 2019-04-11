@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Hertz
- * Date: 19.11.2018
- * Time: 02:13
- */
 
-namespace TWAPI\Transport;
-
+namespace APITransferWise\Transport;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;

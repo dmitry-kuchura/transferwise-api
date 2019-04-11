@@ -11,8 +11,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "TWAPI\\": "src/TWAPI/",
-      "test\\TWAPI\\": "test/TWAPI"
+      "APITransferWise\\": "src/APITransferWise/",
+      "test\\APITransferWise\\": "test/APITransferWise"
     }
   },
   "require": {

@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 
-namespace TWAPI\Transport;
+namespace APITransferWise\Transport;
 
 abstract class Transport
 {
