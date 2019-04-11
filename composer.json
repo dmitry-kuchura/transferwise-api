@@ -1,0 +1,27 @@
+{
+  "name": "dmitry-kuchura/transferwise-api",
+  "description": "PHP API for TransferWise",
+  "minimum-stability": "stable",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Kuchura Dmitry",
+      "email": "kuchura.d@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "TWAPI\\": "src/TWAPI/",
+      "test\\TWAPI\\": "test/TWAPI"
+    }
+  },
+  "require": {
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "^7",
+    "phpspec/phpspec": "^5.1"
+  }
+}
