@@ -1,14 +1,10 @@
 <?php
 
-namespace APITransferWise;
+namespace App\APITransferWise;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
-use GuzzleHttp\UriTemplate;
-use TWAPI\Transport\GuzzleTransport;
-use TWAPI\Transport\Transport;
-use TWAPI\Transport\TransportFactory;
+use Psr\Http\Message\ResponseInterface;
 
 class API
 {
@@ -16,50 +12,63 @@ class API
 
     const BASE_URL_API_SANDBOX = 'https://api.sandbox.transferwise.tech/v1/';
 
-    protected $profiles;
+    const METHOD_GET = 'GET';
 
-    protected $apiToken;
-    /**
-     * @var Transport
-     */
-    protected $transport;
+    const METHOD_POST = 'POST';
 
-    /**
-     * API constructor.
-     * @param $token access token
-     * @param array $options Advanced options for transport
-     */
-    public function __construct($token, array $options = [])
+    const METHOD_PUT = 'PUT';
+
+    const METHOD_DELETE = 'DELETE';
+
+    protected $apiToken = '';
+
+    protected $request;
+
+    public function __construct($token, $options = [])
     {
-        $this->transport = $this->buildTransport($token, $options);
+        $this->apiToken = $token;
+
+        $this->request = $this->buildRequest($options);
     }
 
-    protected function getBaseUri($opts): string
+    protected function getBaseUri($opts)
     {
-        return isset($opts['sandbox']) && $opts['sandbox']
-            ? self::BASE_URL_API_SANDBOX
-            : self::BASE_URL_API_PRODUCTION;
+        return isset($opts['sandbox']) && $opts['sandbox'] ? self::BASE_URL_API_SANDBOX : self::BASE_URL_API_PRODUCTION;
     }
 
-    protected function buildTransport($token, $options)
+    protected function buildRequest($options)
     {
-        $baseUrl = $this->getBaseUri($options);
+        $clientOpts = [
+            'base_uri' => $this->getBaseUri($options),
 
-        $opts = array_merge([], $options);
-        $opts['base_url'] = $baseUrl;
-        $opts['token'] = $token;
+            RequestOptions::TIMEOUT => 30,
 
-        return TransportFactory::createGuzzleTransport($opts);
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->apiToken,
+                'Content-Type' => 'application/json',
+            ],
+        ];
+
+        return new Client($clientOpts);
     }
 
-
-    public function profiles()
+    protected function decode(ResponseInterface $request)
     {
-        if (!$this->profiles) {
-            $this->profiles = new ProfilesAPI($this->transport);
-        }
-        return $this->profiles;
+        return json_decode(
+            $request->getBody(),
+            true
+        );
     }
 
+    public function getProfile()
+    {
+        return $this->decode($this->request->request(self::METHOD_GET, 'profiles'));
+    }
 
+    public function createRecipientAccount($body)
+    {
+        return $this->decode($this->request->request(self::METHOD_POST, 'accounts', [
+            'body' => json_encode($body)
+        ]));
+    }
 }
